@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maranatha's Cake Shop — Pasteles artesanales por encargo</title>
+    <meta name="description" content="Pasteles, cupcakes, tartas y dulces hechos a mano para cumpleaños, bodas y momentos especiales. Haz tu pedido personalizado." />
+    <meta property="og:title" content="Maranatha's Cake Shop — Pasteles artesanales" />
+    <meta property="og:description" content="Pasteles personalizados para cumpleaños, bodas y ocasiones especiales." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script>
+      // Prevent external browser extension errors (e.g. CRX emulator / content script message timeouts) from leaking into window
+      window.addEventListener('error', function(event) {
+        var msg = (event.message || '') + (event.filename || '') + ((event.error && event.error.stack) || '');
+        if (
+          msg.includes('chrome-extension://') ||
+          msg.includes('chrome: call method') ||
+          msg.includes('bekkpoinfafbjglppgdobfdeckghdhlo')
+        ) {
+          event.stopImmediatePropagation();
+          event.preventDefault();
+          return true;
+        }
+      }, true);
+
+      window.addEventListener('unhandledrejection', function(event) {
+        var reason = event.reason;
+        var msg = (reason && (reason.message || reason.stack)) || String(reason || '');
+        if (
+          msg.includes('chrome-extension://') ||
+          msg.includes('chrome: call method') ||
+          msg.includes('bekkpoinfafbjglppgdobfdeckghdhlo')
+        ) {
+          event.stopImmediatePropagation();
+          event.preventDefault();
+        }
+      }, true);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

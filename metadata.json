@@ -1,0 +1,6 @@
+{
+  "name": "Maranatha's Cake Shop",
+  "description": "Pasteles artesanales por encargo. Pasteles, cupcakes, tartas y dulces hechos a mano para cumpleaños, bodas y momentos especiales.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
