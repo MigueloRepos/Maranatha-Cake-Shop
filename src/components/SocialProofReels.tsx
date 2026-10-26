@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Play,
   Pause,
@@ -300,7 +301,14 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
   const activeReel = activeReelIndex !== null ? filteredReels[activeReelIndex] : null;
 
   return (
-    <section id="reels" className="bg-muted/70 px-6 py-20 md:px-12 md:py-28 relative">
+    <motion.section
+      id="reels"
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="bg-muted/70 px-6 py-20 md:px-12 md:py-28 relative"
+    >
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -309,7 +317,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
               <span className="eyebrow">Social Proof 2.0</span>
               <span className="text-xs text-muted-foreground">·</span>
               <span className="text-xs font-semibold text-secondary-foreground flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-secondary" />
+                <Sparkles className="w-3.5 h-3.5 text-[#DA914C]" />
                 UGC en Directo
               </span>
             </div>
@@ -335,7 +343,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
               </>
             ) : (
               <>
-                <Volume2 className="w-4 h-4 text-primary animate-pulse" />
+                <Volume2 className="w-4 h-4 text-[#DA914C] animate-pulse" />
                 <span className="text-primary font-semibold">Audio ambiente activo</span>
               </>
             )}
@@ -347,17 +355,18 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
           {CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat;
             return (
-              <button
+              <motion.button
                 key={cat}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(cat)}
                 className={`whitespace-nowrap px-4 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-xs"
+                    ? "bg-[#DD1D4A] text-white shadow-xs"
                     : "bg-card text-muted-foreground hover:text-foreground border border-border/80"
                 }`}
               >
                 {cat}
-              </button>
+              </motion.button>
             );
           })}
         </div>
@@ -377,10 +386,15 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
             const isSaved = !!savedMap[reel.id];
 
             return (
-              <div
+              <motion.div
                 key={reel.id}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
+                whileHover={{ y: -6 }}
                 onClick={() => openFullscreenModal(index)}
-                className="group relative cursor-pointer overflow-hidden rounded-2xl bg-card border border-border/80 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col"
+                className="group relative cursor-pointer overflow-hidden rounded-2xl bg-card border border-border/80 shadow-sm transition-shadow duration-300 hover:shadow-xl flex flex-col"
               >
                 {/* 9:16 Vertical Video Frame */}
                 <div className="relative aspect-[9/16] w-full overflow-hidden bg-black">
@@ -409,7 +423,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
                   {/* Top Progress Bar */}
                   <div className="absolute top-0 inset-x-0 h-1 bg-white/20">
                     <div
-                      className="h-full bg-secondary transition-all duration-100 ease-linear"
+                      className="h-full bg-[#DA914C] transition-all duration-100 ease-linear"
                       style={{ width: `${isPlaying ? progress : 0}%` }}
                     />
                   </div>
@@ -437,7 +451,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
                     >
                       <div
                         className={`p-2 rounded-full backdrop-blur-md ${
-                          likeData.liked ? "bg-red-500/90 text-white" : "bg-black/50 text-white"
+                          likeData.liked ? "bg-[#DD1D4A] text-white" : "bg-black/50 text-white"
                         }`}
                       >
                         <Heart className={`w-4 h-4 ${likeData.liked ? "fill-white" : ""}`} />
@@ -454,7 +468,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
                     >
                       <div
                         className={`p-2 rounded-full backdrop-blur-md ${
-                          isSaved ? "bg-secondary text-secondary-foreground" : "bg-black/50 text-white"
+                          isSaved ? "bg-[#FBC9D2] text-[#4A2832]" : "bg-black/50 text-white"
                         }`}
                       >
                         <Bookmark className={`w-4 h-4 ${isSaved ? "fill-current" : ""}`} />
@@ -486,11 +500,11 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
                   {/* Bottom Metadata & Review Quote Overlay */}
                   <div className="absolute bottom-0 inset-x-0 p-4 text-white z-10 pointer-events-none">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <div className="w-6 h-6 rounded-full bg-secondary/80 flex items-center justify-center text-[10px] font-bold text-foreground">
+                      <div className="w-6 h-6 rounded-full bg-[#FBC9D2] flex items-center justify-center text-[10px] font-bold text-[#4A2832]">
                         {reel.authorName.charAt(0)}
                       </div>
                       <span className="text-xs font-semibold">{reel.authorName}</span>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-secondary fill-secondary/20" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#DA914C] fill-[#DA914C]/20" />
                     </div>
 
                     <p className="text-[11px] text-white/70 line-clamp-1">{reel.location}</p>
@@ -499,7 +513,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
                       “{reel.review}”
                     </p>
 
-                    <div className="mt-3 flex items-center justify-between text-[11px] text-secondary font-medium pt-2 border-t border-white/15">
+                    <div className="mt-3 flex items-center justify-between text-[11px] text-[#F0C488] font-medium pt-2 border-t border-white/15">
                       <span>{reel.cakeSpecs.split("·")[0]}</span>
                       <span className="underline underline-offset-2 flex items-center gap-0.5">
                         Ver reel <ArrowRight className="w-3 h-3" />
@@ -507,7 +521,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -519,12 +533,12 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
               ¿Quieres que tu tarta aparezca en nuestros Reels?
             </p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Etiquétanos en Instagram con <span className="font-semibold text-primary">#MaranathasCakes</span> al cortar tu tarta.
+              Etiquétanos en Instagram con <span className="font-semibold text-[#F24770]">#MaranathasCakes</span> al cortar tu tarta.
             </p>
           </div>
           <a
             href="#pedido"
-            className="inline-flex items-center gap-2 text-xs font-semibold bg-primary text-primary-foreground px-5 py-2.5 rounded-full hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-semibold bg-[#DD1D4A] hover:bg-[#B8173D] text-white px-5 py-2.5 rounded-full transition-colors"
           >
             Encargar mi diseño ahora
             <ArrowRight className="w-3.5 h-3.5" />
@@ -532,51 +546,60 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
         </div>
       </div>
 
-      {/* Fullscreen Reel Viewer Modal */}
-      {activeReel && activeReelIndex !== null && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-2 sm:p-6 fade-up"
-          onClick={closeFullscreenModal}
-        >
-          {/* Close button */}
-          <button
+      {/* Fullscreen Reel Viewer Modal with AnimatePresence */}
+      <AnimatePresence>
+        {activeReel && activeReelIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-2 sm:p-6"
             onClick={closeFullscreenModal}
-            className="absolute top-4 right-4 z-50 p-2.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors cursor-pointer"
-            aria-label="Cerrar reproductor"
           >
-            <X className="w-6 h-6" />
-          </button>
+            {/* Close button */}
+            <button
+              onClick={closeFullscreenModal}
+              className="absolute top-4 right-4 z-50 p-2.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors cursor-pointer"
+              aria-label="Cerrar reproductor"
+            >
+              <X className="w-6 h-6" />
+            </button>
 
-          {/* Prev / Next buttons for desktop */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              prevReel();
-            }}
-            className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/10 text-white hover:bg-white/25 transition-all"
-            aria-label="Reel anterior"
-          >
-            <ChevronLeft className="w-7 h-7" />
-          </button>
+            {/* Prev / Next buttons for desktop */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                prevReel();
+              }}
+              className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/10 text-white hover:bg-white/25 transition-all"
+              aria-label="Reel anterior"
+            >
+              <ChevronLeft className="w-7 h-7" />
+            </button>
 
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              nextReel();
-            }}
-            className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/10 text-white hover:bg-white/25 transition-all"
-            aria-label="Reel siguiente"
-          >
-            <ChevronRight className="w-7 h-7" />
-          </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                nextReel();
+              }}
+              className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/10 text-white hover:bg-white/25 transition-all"
+              aria-label="Reel siguiente"
+            >
+              <ChevronRight className="w-7 h-7" />
+            </button>
 
-          {/* Reel Container (9:16) */}
-          <div
-            className="relative w-full max-w-[420px] aspect-[9/16] max-h-[92vh] rounded-2xl overflow-hidden bg-black shadow-2xl flex flex-col justify-between"
-            onClick={(e) => e.stopPropagation()}
-          >
+            {/* Reel Container (9:16) */}
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.94, opacity: 0, y: 15 }}
+              transition={{ duration: 0.24, ease: "easeOut" }}
+              className="relative w-full max-w-[420px] aspect-[9/16] max-h-[92vh] rounded-2xl overflow-hidden bg-black shadow-2xl flex flex-col justify-between"
+              onClick={(e) => e.stopPropagation()}
+            >
             {/* Top progress bar */}
             <div className="absolute top-2 inset-x-3 z-30 flex gap-1">
               {filteredReels.map((r, i) => (
@@ -599,13 +622,13 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
             {/* Top Reel Bar */}
             <div className="relative z-20 flex items-center justify-between p-4 pt-6 text-white text-xs">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-secondary text-foreground flex items-center justify-center font-bold text-xs">
+                <div className="w-8 h-8 rounded-full bg-[#FBC9D2] text-[#4A2832] flex items-center justify-center font-bold text-xs">
                   {activeReel.authorName.charAt(0)}
                 </div>
                 <div>
                   <div className="flex items-center gap-1 font-semibold">
                     <span>{activeReel.authorName}</span>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-secondary" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#DA914C]" />
                   </div>
                   <span className="text-[11px] text-white/70">{activeReel.userHandle}</span>
                 </div>
@@ -617,7 +640,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
                   className="p-2 rounded-full bg-black/40 backdrop-blur-md text-white hover:bg-black/60 transition-colors"
                   aria-label={isMuted ? "Activar sonido" : "Silenciar"}
                 >
-                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-secondary" />}
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#DA914C]" />}
                 </button>
               </div>
             </div>
@@ -654,7 +677,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
               >
                 <div
                   className={`p-2.5 rounded-full backdrop-blur-md transition-transform ${
-                    likesMap[activeReel.id]?.liked ? "bg-red-500 text-white scale-110" : "bg-black/50 text-white"
+                    likesMap[activeReel.id]?.liked ? "bg-[#DD1D4A] text-white scale-110" : "bg-black/50 text-white"
                   }`}
                 >
                   <Heart className={`w-5 h-5 ${likesMap[activeReel.id]?.liked ? "fill-white" : ""}`} />
@@ -670,7 +693,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
               >
                 <div
                   className={`p-2.5 rounded-full backdrop-blur-md ${
-                    savedMap[activeReel.id] ? "bg-secondary text-secondary-foreground" : "bg-black/50 text-white"
+                    savedMap[activeReel.id] ? "bg-[#FBC9D2] text-[#4A2832]" : "bg-black/50 text-white"
                   }`}
                 >
                   <Bookmark className={`w-5 h-5 ${savedMap[activeReel.id] ? "fill-current" : ""}`} />
@@ -691,7 +714,7 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
 
             {/* Bottom Caption & CTA */}
             <div className="relative z-30 p-5 text-white">
-              <p className="text-xs text-secondary font-medium tracking-wide">
+              <p className="text-xs text-[#F0C488] font-medium tracking-wide">
                 📍 {activeReel.location}
               </p>
 
@@ -711,16 +734,17 @@ export function SocialProofReels({ onSelectCakeType }: SocialProofReelsProps) {
                     closeFullscreenModal();
                     onSelectCakeType?.(activeReel.cakeType, `Inspirado en el reel de ${activeReel.authorName} (${activeReel.cakeSpecs})`);
                   }}
-                  className="flex-1 py-3 px-4 rounded-full bg-secondary text-secondary-foreground text-xs font-semibold text-center hover:bg-secondary/90 transition-all flex items-center justify-center gap-1.5 shadow-lg"
+                  className="flex-1 py-3 px-4 rounded-full bg-[#DD1D4A] text-white hover:bg-[#B8173D] text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5 shadow-lg"
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#F0C488]" />
                   Pedir un diseño como este
                 </a>
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
-    </section>
+    </AnimatePresence>
+  </motion.section>
   );
 }
